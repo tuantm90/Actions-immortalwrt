@@ -1,18 +1,28 @@
 #!/bin/bash
 #
-# https://github.com/P3TERX/Actions-OpenWrt
-# File name: diy-part1.sh
+# https://github.com/padavanonly/immortalwrt-mt798x-6.6
+# File: diy-part1.sh
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
 #
-# Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
 
-# Uncomment a feed source
-#sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+# Chỉ thêm feed nếu chưa tồn tại để tránh trùng lặp
 
-# Add a feed source
-echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
-#echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
+add_feed_if_not_exists() {
+    local feed_name="$1"
+    local feed_url="$2"
+    if ! grep -q "$feed_url" feeds.conf.default; then
+        echo "src-git $feed_name $feed_url" >> feeds.conf.default
+    fi
+}
+
+# Ví dụ: bật lại feed helloworld nếu bị comment
+# sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+
+# Thêm các feed thường dùng:
+add_feed_if_not_exists helloworld https://github.com/fw876/helloworld
+add_feed_if_not_exists passwall https://github.com/xiaorouji/openwrt-passwall
+add_feed_if_not_exists passwall2 https://github.com/xiaorouji/openwrt-passwall2
+add_feed_if_not_exists small https://github.com/kenzok8/small
+
+# Nếu cần thêm feed riêng, thêm dòng sau:
+# add_feed_if_not_exists <tên_feed> <url_feed>
