@@ -1,32 +1,25 @@
 #
-# https://github.com/P3TERX/Actions-OpenWrt
-#
+# https://github.com/padavanonly/immortalwrt-mt798x-6.6
 # File: .github/workflows/update-checker.yml
-# Description: Source code update checker
-#
-# Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
+# Description: Check for upstream source code updates
 #
 
 name: Update Checker
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x-6.6
+  REPO_BRANCH: openwrt-24.10-6.6
 
 on:
   workflow_dispatch:
 #  schedule:
-#    - cron: 0 */18 * * *
+#    - cron: '0 */18 * * *' # Kiểm tra mỗi 18 giờ
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -49,7 +42,7 @@ jobs:
       if: steps.cacheHash.outputs.cache-hit != 'true'
       uses: peter-evans/repository-dispatch@v2
       with:
-        token: ${{ github.token }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         event-type: Source Code Update
 
     - name: Delete workflow runs
