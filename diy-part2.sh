@@ -27,4 +27,3 @@
 # ✅ Cập nhật timestamp build (hiển thị trên Luci hoặc firmware)
 BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
 echo "Build date: $BUILD_DATE"
-
