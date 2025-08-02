@@ -12,7 +12,7 @@ CFG_FILE="package/base-files/files/bin/config_generate"
 sed -i 's/ipad=\${ipaddr:-"[^"]*"}/ipad=${ipaddr:-"192.168.1.1"}/' "$CFG_FILE"
 
 # ✅ Đổi hostname thành T-Wrt
-sed -i "s/hostname=.*/hostname='T-Wrt'/" "$CFG_FILE"
+sed -i "s/set system\.@system\[-1\]\.hostname='[^']*'/set system.@system[-1].hostname='T-Wrt'/" "$CFG_FILE"
 
 # ✅ Đổi timezone thành Asia/Ho_Chi_Minh
 sed -i "s/timezone=.*/timezone='Asia\/Ho_Chi_Minh'/" "$CFG_FILE"
