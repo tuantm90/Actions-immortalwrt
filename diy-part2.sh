@@ -15,7 +15,7 @@ sed -i 's/ipad=\${ipaddr:-"[^"]*"}/ipad=${ipaddr:-"192.168.1.1"}/' "$CFG_FILE"
 sed -i "s/set system\.@system\[-1\]\.hostname='[^']*'/set system.@system[-1].hostname='T-Wrt'/" "$CFG_FILE"
 
 # ✅ Đổi timezone thành Asia/Ho_Chi_Minh
-sed -i "s/timezone=.*/timezone='Asia\/Ho_Chi_Minh'/" "$CFG_FILE"
+sed -i "s/set system\.@system\[-1\]\.timezone='[^']*'/set system.@system[-1].timezone='Asia\/Ho_Chi_Minh'/" "$CFG_FILE"
 
 # ✅ Đổi danh sách NTP server
 # Xóa toàn bộ dòng add_list system.ntp.server hiện tại và thêm mới
