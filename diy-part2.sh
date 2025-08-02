@@ -9,7 +9,7 @@ CFG_FILE="package/base-files/files/bin/config_generate"
 }
 
 # ✅ Đổi IP mặc định thành 192.168.1.1
-sed -i "s/ipaddr=.*/ipaddr='192.168.1.1'/" "$CFG_FILE"
+sed -i 's/ipad=\${ipaddr:-"[^"]*"}/ipad=${ipaddr:-"192.168.1.1"}/' "$CFG_FILE"
 
 # ✅ Đổi hostname thành T-Wrt
 sed -i "s/hostname=.*/hostname='T-Wrt'/" "$CFG_FILE"
