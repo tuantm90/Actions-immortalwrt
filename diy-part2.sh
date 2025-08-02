@@ -1,29 +1,29 @@
 #!/bin/bash
-#
-# File: diy-part2.sh
-# Description: OpenWrt DIY script part 2 (After Update feeds)
-# Áp dụng cho repo: https://github.com/padavanonly/immortalwrt-mt798x-6.6
-#
+# Tự động sửa config_generate khi build ImmortalWrt
 
-# ✅ Thay đổi IP mặc định nếu cần
-# Ví dụ: đổi từ 192.168.1.1 → 192.168.50.5
-# sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+CFG_FILE="package/base-files/files/bin/config_generate"
 
-# ✅ Đổi theme mặc định sang luci-theme-argon nếu có
-# if grep -q "luci-theme-argon" feeds/luci/collections/luci/Makefile; then
-#     sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-# fi
+[ -f "$CFG_FILE" ] || {
+    echo "❌ Không tìm thấy file $CFG_FILE"
+    exit 1
+}
 
-# ✅ Đổi hostname thiết bị (hiển thị trong Luci)
-# sed -i 's/OpenWrt/ImmortalWRT/g' package/base-files/files/bin/config_generate
+# ✅ Đổi IP mặc định thành 192.168.1.1
+sed -i "s/ipaddr=.*/ipaddr='192.168.1.1'/" "$CFG_FILE"
 
-# ✅ Thêm theme hoặc app tùy chọn nếu chưa có
-# Ví dụ clone theme argon
-# [ ! -d "package/lean/luci-theme-argon" ] && git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/lean/luci-theme-argon
+# ✅ Đổi hostname thành T-Wrt
+sed -i "s/hostname=.*/hostname='T-Wrt'/" "$CFG_FILE"
 
-# ✅ Thêm plugin tự chọn (nếu cần)
-# git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+# ✅ Đổi timezone thành Asia/Ho_Chi_Minh
+sed -i "s/timezone=.*/timezone='Asia\/Ho_Chi_Minh'/" "$CFG_FILE"
 
-# ✅ Cập nhật timestamp build (hiển thị trên Luci hoặc firmware)
-BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
-echo "Build date: $BUILD_DATE"
+# ✅ Đổi danh sách NTP server
+# Xóa toàn bộ dòng add_list system.ntp.server hiện tại và thêm mới
+sed -i "/add_list system.ntp.server/d" "$CFG_FILE"
+sed -i "/set system.ntp.enable_server='0'/a \
+add_list system.ntp.server='vn.pool.ntp.org'\n\
+add_list system.ntp.server='time.google.com'\n\
+add_list system.ntp.server='time.cloudflare.com'\n\
+add_list system.ntp.server='time.apple.com'" "$CFG_FILE"
+
+echo "✅ Đã sửa $CFG_FILE đúng yêu cầu"
