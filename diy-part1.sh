@@ -18,11 +18,5 @@ add_feed_if_not_exists() {
 # Ví dụ: bật lại feed helloworld nếu bị comment
 # sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
-# Thêm các feed thường dùng:
-add_feed_if_not_exists helloworld https://github.com/fw876/helloworld
-add_feed_if_not_exists passwall https://github.com/xiaorouji/openwrt-passwall
-add_feed_if_not_exists passwall2 https://github.com/xiaorouji/openwrt-passwall2
-add_feed_if_not_exists small https://github.com/kenzok8/small
-
 # Nếu cần thêm feed riêng, thêm dòng sau:
 # add_feed_if_not_exists <tên_feed> <url_feed>
