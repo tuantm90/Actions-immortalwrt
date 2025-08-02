@@ -12,8 +12,8 @@ env:
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '0 */18 * * *' # Kiểm tra mỗi 18 giờ
+  schedule:
+    - cron: '0 12 * * 6' # Chạy vào 19h tối thứ Bảy giờ Việt Nam (12h UTC)
 
 jobs:
   check:
