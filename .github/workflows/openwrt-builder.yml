@@ -76,6 +76,10 @@ jobs:
         cd openwrt
         [ -f $GITHUB_WORKSPACE/$DIY_P2_SH ] && $GITHUB_WORKSPACE/$DIY_P2_SH
 
+    - name: Make UCI-defaults executable
+      run: |
+        chmod -R +x openwrt/files/etc/uci-defaults || true
+  
     - name: Download packages
       id: package
       run: |
